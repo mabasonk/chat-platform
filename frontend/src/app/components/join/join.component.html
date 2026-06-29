@@ -1,0 +1,18 @@
+<div class="join-wrapper">
+  <div class="join-card">
+    <div class="join-logo">JSE</div>
+    <h1>Chat Platform</h1>
+    <p class="join-sub">Enter your name to join the room</p>
+    <input
+      type="text"
+      [(ngModel)]="username"
+      (keydown)="onKeydown($event)"
+      placeholder="Your name"
+      maxlength="30"
+      autofocus
+    />
+    <button (click)="join()" [disabled]="!username.trim()">
+      Join
+    </button>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="chat-layout">
+
+  <!-- Header -->
+  <header class="chat-header">
+    <div class="header-left">
+      <span class="logo">JSE</span>
+      <span class="room-name">General</span>
+    </div>
+    <div class="header-right">
+      <span class="status-dot" [class.connected]="connected"></span>
+      <span class="username">{{ username }}</span>
+    </div>
+  </header>
+
+  <!-- Messages -->
+  <div class="message-list" #messageList>
+    <div *ngIf="messages.length === 0" class="empty-state">
+      No messages yet. Say hello
+    </div>
+
+    <div
+      *ngFor="let msg of messages"
+      class="message-row"
+      [class.own]="isOwnMessage(msg)"
+    >
+      <div class="bubble">
+        <div class="bubble-meta">
+          <span class="bubble-username">{{ isOwnMessage(msg) ? 'You' : msg.username }}</span>
+          <span class="bubble-time">{{ formatTime(msg.timestamp) }}</span>
+        </div>
+        <div class="bubble-content">{{ msg.content }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input-bar">
+    <input
+      type="text"
+      [(ngModel)]="newMessage"
+      (keydown)="onKeydown($event)"
+      placeholder="Type a message..."
+      [disabled]="!connected"
+      maxlength="500"
+    />
+    <button (click)="send()" [disabled]="!connected || !newMessage.trim()">
+      Send
+    </button>
+  </div>
+
+</div>
